@@ -1,0 +1,12 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/wp-env.json",
+	"core": "https://wordpress.org/wordpress-6.9.zip",
+	"plugins": ["."],
+	"phpVersion": "8.2",
+	"env": {
+		"tests": {
+			"phpVersion": "8.2"
+		}
+	},
+	"port": 3333
+}
