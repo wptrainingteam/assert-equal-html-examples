@@ -1,6 +1,6 @@
 # assertEqualHTML examples
 
-Companion plugin for the article **"Stop hardcoding HTML strings in your WordPress PHPUnit tests"** on the WordPress Developer Blog.
+Companion plugin for the article **"A Better Way to Assert HTML in WordPress with assertEqualHTML()"** on the WordPress Developer Blog.
 
 Contains the four plugin functions from the article and their PHPUnit tests, all using `assertEqualHTML()` from `WP_UnitTestCase`.
 
