@@ -16,6 +16,13 @@ class RenderCardBlockTest extends WP_UnitTestCase {
 	 * Note: assertEqualHTML normalizes class order — so it doesn't matter
 	 * whether add_class() puts "is-style-outlined" before or after
 	 * "wp-block-my-plugin-card".
+	 *
+	 * Whitespace tip: attributes can span multiple lines (they are part of the
+	 * opening tag, not text nodes). But whitespace *between* elements — like a
+	 * newline between `>` and `<p>` — creates a text node that must match the
+	 * actual output. Since the render callback concatenates $content directly
+	 * with no surrounding whitespace, the expected string must do the same:
+	 * `...><p>...</p></div>` with no gaps.
 	 */
 	public function test_card_block_renders_with_background_color(): void {
 		$attributes = array(
@@ -28,14 +35,13 @@ class RenderCardBlockTest extends WP_UnitTestCase {
 		$output = my_plugin_render_card_block( $attributes, $inner_content );
 
 		// Attribute order and class order don't need to match exactly.
-		$expected = '
-			<div
-				class="is-style-outlined my-custom-class wp-block-my-plugin-card"
-				style="background-color: #f5f5f5;"
-			>
-				<p class="wp-block-paragraph">Hello</p>
-			</div>
-		';
+		// Attributes may be on separate lines for readability — that's fine.
+		// But there must be no whitespace between > and <p>, since the actual
+		// output has none (whitespace-only text nodes are compared as-is).
+		$expected = '<div
+			class="is-style-outlined my-custom-class wp-block-my-plugin-card"
+			style="background-color: #f5f5f5;"
+		><p class="wp-block-paragraph">Hello</p></div>';
 
 		$this->assertEqualHTML( $expected, $output );
 	}
