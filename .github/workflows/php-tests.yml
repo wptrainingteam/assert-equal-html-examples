@@ -24,13 +24,13 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: "8.2"
           coverage: none
 
       - name: Install npm dependencies
@@ -49,10 +49,7 @@ jobs:
           echo "WordPress is ready!"
 
       - name: Run PHPUnit
-        run: |
-          npx wp-env run tests-cli \
-            --env-cwd='/var/www/html/wp-content/plugins/assert-equal-html-examples' \
-            vendor/bin/phpunit --log-junit phpunit-results.xml
+        run: npm run test:php
 
       - name: Publish test results
         uses: dorny/test-reporter@v1
