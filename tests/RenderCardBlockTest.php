@@ -23,6 +23,10 @@ class RenderCardBlockTest extends WP_UnitTestCase {
 	 * actual output. Since the render callback concatenates $content directly
 	 * with no surrounding whitespace, the expected string must do the same:
 	 * `...><p>...</p></div>` with no gaps.
+	 *
+	 * NOWDOC syntax (<<<'HTML') keeps the expected markup readable without
+	 * variable interpolation. Indented closing markers (PHP 7.3+) let the
+	 * heredoc align naturally with the surrounding code.
 	 */
 	public function test_card_block_renders_with_background_color(): void {
 		$attributes = array(
@@ -38,10 +42,12 @@ class RenderCardBlockTest extends WP_UnitTestCase {
 		// Attributes may be on separate lines for readability — that's fine.
 		// But there must be no whitespace between > and <p>, since the actual
 		// output has none (whitespace-only text nodes are compared as-is).
-		$expected = '<div
+		$expected = <<<'HTML'
+		<div
 			class="is-style-outlined my-custom-class wp-block-my-plugin-card"
 			style="background-color: #f5f5f5;"
-		><p class="wp-block-paragraph">Hello</p></div>';
+		><p class="wp-block-paragraph">Hello</p></div>
+		HTML;
 
 		$this->assertEqualHTML( $expected, $output );
 	}
